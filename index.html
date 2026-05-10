@@ -2,314 +2,469 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mizuki | DXコンサルタント</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>吉田 瑞生 ・ DX / 業務効率化 / Notion</title>
+  <meta name="description" content="Notionを中心としたDXコンサルタント。動くほど賢くなる自動化システムを設計します。">
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Noto+Serif+JP:wght@500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&family=Noto+Sans+JP:wght@300;400;500;600&family=Noto+Serif+JP:ital,wght@0,500;1,500&display=swap" rel="stylesheet">
+
   <style>
+    :root {
+      --font-display: 'Cormorant Garamond', 'Noto Serif JP', serif;
+      --font-body: 'Inter', 'Noto Sans JP', system-ui, sans-serif;
+      --font-mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', monospace;
+
+      --gold: #c9a86a;
+      --gold-soft: #d9bf8a;
+      --gold-deep: #a78751;
+      --cream: #f5f1e8;
+      --cream-mute: #c9c2b3;
+      --ink: #050813;
+      --ink-card: #0e1220;
+      --ink-line: rgba(201, 168, 106, 0.16);
+      --muted: #6c7080;
+    }
+
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
-    :root {
-      --primary: #0F172A;
-      --secondary: #334155;
-      --accent: #0369A1;
-      --bg: #F8FAFC;
-      --card-bg: #FFFFFF;
-      --text: #020617;
-      --text-muted: #64748B;
-      --border: #E2E8F0;
-      --shadow-sm: 0 1px 3px rgba(15,23,42,0.04), 0 1px 2px rgba(15,23,42,0.06);
-      --shadow-md: 0 4px 12px rgba(15,23,42,0.06), 0 2px 4px rgba(15,23,42,0.04);
-      --shadow-lg: 0 12px 32px rgba(15,23,42,0.08), 0 4px 8px rgba(15,23,42,0.04);
-      --radius: 14px;
-    }
-
-    body {
-      font-family: "Noto Sans JP", -apple-system, BlinkMacSystemFont, sans-serif;
-      background: var(--bg);
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      padding: 40px 20px 60px;
-      color: var(--text);
+    html, body {
+      min-height: 100%;
+      background: radial-gradient(circle at 50% 0%, #161b2e 0%, #0a0d18 60%, #050813 100%);
+      color: var(--cream);
+      font-family: var(--font-body);
       -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
 
-    .container {
-      width: 100%;
-      max-width: 440px;
+    a { color: inherit; text-decoration: none; }
+
+    .stage {
+      min-height: 100vh; min-height: 100dvh;
+      display: flex; align-items: stretch; justify-content: center;
+      padding: 0;
     }
 
-    /* ── Profile Card ── */
-    .profile-card {
-      background: var(--card-bg);
-      border-radius: 20px;
-      padding: 40px 32px 32px;
-      text-align: center;
-      box-shadow: var(--shadow-md);
-      border: 1px solid var(--border);
-      margin-bottom: 20px;
+    .page {
+      width: 100%; max-width: 480px;
+      background: var(--ink-card);
       position: relative;
-      overflow: hidden;
+      padding: 28px 28px 40px;
+      min-height: 100vh; min-height: 100dvh;
     }
 
-    .profile-card::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 100px;
-      background: linear-gradient(135deg, var(--primary) 0%, #1E3A5F 100%);
+    @media (min-width: 600px) {
+      .stage { padding: 32px 16px; align-items: flex-start; }
+      .page {
+        min-height: auto; border-radius: 28px;
+        box-shadow:
+          0 40px 80px -20px rgba(0,0,0,0.6),
+          0 0 0 1px rgba(201,168,106,0.12),
+          0 0 80px -20px rgba(201,168,106,0.18);
+        overflow: hidden;
+        margin: 24px 0;
+      }
     }
 
-    .profile-photo-wrapper {
-      position: relative;
-      z-index: 1;
-      margin-bottom: 20px;
-    }
-
-    .profile-photo {
-      width: 110px;
-      height: 110px;
-      border-radius: 50%;
-      object-fit: cover;
-      object-position: center top;
-      border: 4px solid var(--card-bg);
-      box-shadow: var(--shadow-lg);
-      background: var(--bg);
-    }
-
-    .profile-card h1 {
-      font-family: "Noto Serif JP", serif;
-      font-size: 17px;
-      font-weight: 700;
-      color: var(--primary);
-      line-height: 1.6;
-      letter-spacing: 0.02em;
-      margin-bottom: 16px;
-    }
-
-    .divider {
-      width: 40px;
-      height: 2px;
-      background: var(--accent);
-      margin: 0 auto 16px;
-      border-radius: 1px;
-    }
-
-    .bio {
-      font-size: 13px;
-      color: var(--text-muted);
-      line-height: 1.8;
-      font-weight: 400;
-    }
-
-    /* ── Links Section ── */
-    .links {
+    /* ── Masthead strip ── */
+    .masthead {
       display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .link-btn {
-      display: flex;
+      justify-content: space-between;
       align-items: center;
-      justify-content: center;
-      gap: 10px;
-      width: 100%;
-      padding: 16px 24px;
-      background: var(--card-bg);
-      color: var(--primary);
-      text-decoration: none;
-      text-align: center;
-      font-size: 14px;
-      font-weight: 500;
-      border-radius: var(--radius);
-      border: 1px solid var(--border);
-      box-shadow: var(--shadow-sm);
-      transition: all 0.2s ease;
-      cursor: pointer;
-      position: relative;
-      letter-spacing: 0.01em;
-    }
-
-    .link-btn:hover {
-      background: var(--primary);
-      color: #fff;
-      border-color: var(--primary);
-      box-shadow: var(--shadow-lg);
-      transform: translateY(-2px);
-    }
-
-    .link-btn:active {
-      transform: translateY(0);
-      box-shadow: var(--shadow-sm);
-    }
-
-    .link-btn:focus-visible {
-      outline: 2px solid var(--accent);
-      outline-offset: 2px;
-    }
-
-    .link-btn svg {
-      width: 18px;
-      height: 18px;
-      flex-shrink: 0;
-    }
-
-    .link-btn:hover svg {
-      fill: #fff;
-    }
-
-    /* ── Arrow indicator ── */
-    .link-btn::after {
-      content: "";
-      position: absolute;
-      right: 20px;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 6px;
-      height: 6px;
-      border-right: 1.5px solid var(--text-muted);
-      border-top: 1.5px solid var(--text-muted);
-      transform: translateY(-50%) rotate(45deg);
-      transition: border-color 0.2s ease;
-    }
-
-    .link-btn:hover::after {
-      border-color: rgba(255,255,255,0.6);
-    }
-
-    /* ── SNS Icons Section ── */
-    .sns-section {
-      margin-top: 10px;
-    }
-
-    .sns-label {
-      font-size: 11px;
-      color: var(--text-muted);
-      text-align: center;
-      letter-spacing: 0.1em;
+      font-family: var(--font-mono);
+      font-size: 9.5px;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
+      color: var(--gold);
+      opacity: 0.85;
+      padding-bottom: 22px;
+      border-bottom: 1px solid var(--ink-line);
+    }
+    .masthead .dot { color: var(--gold-deep); margin: 0 6px; }
+
+    /* ── Hero ── */
+    .hero { padding: 28px 0 18px; }
+    .hero .kicker {
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+      color: var(--gold);
       margin-bottom: 12px;
     }
-
-    .sns-icons {
-      display: flex;
-      justify-content: center;
-      gap: 16px;
+    .hero .display {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-weight: 500;
+      font-size: 56px;
+      line-height: 1.0;
+      letter-spacing: 0.02em;
+      color: var(--cream);
     }
+    .hero .display .ja {
+      font-family: 'Noto Serif JP', serif;
+      font-style: italic;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+    }
+    .hero .subtitle {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 18px;
+      color: var(--cream-mute);
+      margin-top: 14px;
+      letter-spacing: 0.02em;
+    }
+    .hero .subtitle .em-dash {
+      color: var(--gold);
+      margin-right: 6px;
+    }
+    .hero .tags {
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--cream-mute);
+      margin-top: 10px;
+    }
+    .hero .tags .sep { color: var(--gold-deep); margin: 0 6px; }
 
-    .sns-icon {
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      box-shadow: var(--shadow-sm);
+    /* ── Bio row (photo + quote) ── */
+    .bio-row {
       display: flex;
       align-items: center;
-      justify-content: center;
-      transition: all 0.2s ease;
-      cursor: pointer;
+      gap: 16px;
+      margin-top: 22px;
+      padding: 14px 0 18px;
+      border-bottom: 1px solid var(--ink-line);
+    }
+    .avatar {
+      width: 72px; height: 72px;
+      border-radius: 4px;
+      object-fit: cover;
+      object-position: center 18%;
+      background: rgba(201,168,106,0.08);
+      border: 1px solid var(--ink-line);
+      flex-shrink: 0;
+    }
+    .quote {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 16px;
+      line-height: 1.5;
+      color: var(--cream);
+      letter-spacing: 0.01em;
+    }
+    .quote::before { content: "“"; color: var(--gold); margin-right: 2px; }
+    .quote::after  { content: "”"; color: var(--gold); margin-left: 2px; }
+
+    .bio {
+      font-size: 12px;
+      line-height: 1.85;
+      color: var(--cream-mute);
+      margin: 18px 0 22px;
+      letter-spacing: 0.02em;
     }
 
-    .sns-icon:hover {
-      background: var(--primary);
-      border-color: var(--primary);
-      box-shadow: var(--shadow-md);
+    /* ── Featured CTA ── */
+    .featured {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 16px;
+      padding: 18px 18px 18px 22px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #d9bf8a 0%, #c9a86a 55%, #a78751 100%);
+      color: #1a1408;
+      box-shadow:
+        0 10px 30px -10px rgba(201,168,106,0.45),
+        inset 0 1px 0 rgba(255,255,255,0.35);
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+    }
+    .featured:hover {
       transform: translateY(-2px);
+      box-shadow:
+        0 18px 40px -10px rgba(201,168,106,0.55),
+        inset 0 1px 0 rgba(255,255,255,0.4);
     }
-
-    .sns-icon svg {
-      width: 20px;
-      height: 20px;
-      fill: var(--secondary);
-      transition: fill 0.2s ease;
+    .featured-text { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+    .featured-tag {
+      font-family: var(--font-mono);
+      font-size: 9.5px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(26,20,8,0.7);
     }
-
-    .sns-icon:hover svg {
-      fill: #fff;
+    .featured-tag .sep { margin: 0 6px; opacity: 0.55; }
+    .featured-title {
+      font-family: 'Noto Serif JP', serif;
+      font-weight: 500;
+      font-size: 18px;
+      line-height: 1.35;
+      letter-spacing: 0.02em;
+      color: #14100a;
     }
-
-    .sns-icon:focus-visible {
-      outline: 2px solid var(--accent);
-      outline-offset: 2px;
+    .featured-sub {
+      font-size: 11.5px;
+      color: rgba(26,20,8,0.75);
+      letter-spacing: 0.02em;
     }
+    .featured-arrow {
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      background: #14100a;
+      color: var(--cream);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px;
+      flex-shrink: 0;
+      transition: transform 0.18s ease;
+    }
+    .featured:hover .featured-arrow { transform: translateX(2px); }
 
-    /* ── Footer ── */
-    .footer {
-      text-align: center;
-      margin-top: 32px;
+    /* ── Chapters ── */
+    .chapter { margin-top: 30px; }
+    .chapter-head {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--ink-line);
+    }
+    .chapter-num {
+      font-family: var(--font-mono);
       font-size: 11px;
-      color: #CBD5E1;
-      letter-spacing: 0.05em;
+      color: var(--gold);
+      letter-spacing: 0.1em;
+    }
+    .chapter-title {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-weight: 500;
+      font-size: 19px;
+      color: var(--cream);
+      letter-spacing: 0.02em;
+    }
+    .chapter-title .ja {
+      font-family: 'Noto Serif JP', serif;
+      font-style: italic;
+      font-weight: 500;
+    }
+    .chapter-tag {
+      margin-left: auto;
+      font-family: var(--font-mono);
+      font-size: 9.5px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold-deep);
     }
 
-    /* ── Reduced motion ── */
+    .link-list { list-style: none; }
+    .link-row {
+      display: grid;
+      grid-template-columns: auto auto 1fr auto auto;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 4px;
+      border-bottom: 1px solid rgba(201,168,106,0.08);
+      transition: background 0.18s ease, padding 0.18s ease;
+    }
+    .link-row:hover {
+      background: rgba(201,168,106,0.04);
+      padding-left: 8px;
+    }
+    .link-row:last-child { border-bottom: none; }
+
+    .link-num {
+      font-family: var(--font-mono);
+      font-size: 9.5px;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+    }
+    .link-icon {
+      width: 22px; height: 22px;
+      border-radius: 50%;
+      border: 1px solid var(--ink-line);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .link-icon svg { width: 11px; height: 11px; fill: var(--gold); }
+    .link-meta { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+    .link-title {
+      font-family: 'Noto Serif JP', serif;
+      font-weight: 500;
+      font-size: 14.5px;
+      color: var(--cream);
+      letter-spacing: 0.02em;
+    }
+    .link-title .en {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-weight: 500;
+    }
+    .link-sub {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .link-divider {
+      width: 22px;
+      height: 1px;
+      background: rgba(201,168,106,0.25);
+    }
+    .link-arrow {
+      color: var(--gold);
+      font-size: 13px;
+      opacity: 0.85;
+      transition: transform 0.18s ease, opacity 0.18s ease;
+    }
+    .link-row:hover .link-arrow {
+      transform: translateX(3px);
+      opacity: 1;
+    }
+
+    /* ── Colophon footer ── */
+    .colophon {
+      margin-top: 44px;
+      padding-top: 18px;
+      border-top: 1px solid var(--ink-line);
+      display: flex;
+      justify-content: space-between;
+      font-family: var(--font-mono);
+      font-size: 9.5px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold-deep);
+      opacity: 0.75;
+    }
+
+    @media (max-width: 380px) {
+      .page { padding: 22px 20px 32px; }
+      .hero .display { font-size: 46px; }
+      .featured { grid-template-columns: 1fr; }
+      .featured-arrow { justify-self: flex-end; }
+    }
+
     @media (prefers-reduced-motion: reduce) {
-      .link-btn {
-        transition: none;
-      }
-      .link-btn:hover {
-        transform: none;
-      }
-    }
-
-    /* ── Mobile fine-tuning ── */
-    @media (max-width: 480px) {
-      body {
-        padding: 24px 16px 48px;
-      }
-      .profile-card {
-        padding: 36px 24px 28px;
-      }
-      .profile-card h1 {
-        font-size: 16px;
-      }
+      *, *::before, *::after { transition: none !important; }
+      .featured:hover, .link-row:hover { transform: none; }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="profile-card">
-      <div class="profile-photo-wrapper">
-        <img src="俺透過.png" alt="プロフィール写真" class="profile-photo">
+  <div class="stage">
+    <main class="page">
+
+      <div class="masthead">
+        <span>VOL.<span class="dot">·</span>業務効率化</span>
+        <span>2026<span class="dot">·</span>NO. 09</span>
       </div>
-      <h1>Notionを中心としたDXコンサルタント<br>（運用支援・構築）</h1>
-      <div class="divider"></div>
+
+      <header class="hero">
+        <p class="kicker">Yoshida Mizuki</p>
+        <h1 class="display"><span class="ja">吉田 瑞生</span></h1>
+        <p class="subtitle"><span class="em-dash">—</span>DX / Notionコンサルタント</p>
+        <p class="tags">DX<span class="sep">/</span>業務効率化<span class="sep">/</span>Notion</p>
+      </header>
+
+      <section class="bio-row">
+        <img class="avatar" src="俺透過.png" alt="プロフィール写真">
+        <p class="quote">動くほど賢くなる、自動化システム。</p>
+      </section>
+
       <p class="bio">
         2001年愛知県生まれ、25歳。<br>
         名城大学理工学部応用化学科卒（学士）。<br>
-        DXコンサルティングと塾講師をしています。
+        Notionを中心に、企業のDX・業務自動化を支援しています。
       </p>
-    </div>
 
-    <div class="links">
-      <a href="https://mizuki-dxc-lp-g9i7.vercel.app/" class="link-btn" target="_blank" rel="noopener noreferrer">業務自動化を自動化する</a>
-    </div>
+      <a href="https://mizuki-dxc-lp-g9i7.vercel.app/" class="featured" target="_blank" rel="noopener noreferrer">
+        <div class="featured-text">
+          <span class="featured-tag">FEATURED<span class="sep">·</span>SERVICE<span class="sep">·</span>LP</span>
+          <span class="featured-title">業務自動化を、自動化する。</span>
+          <span class="featured-sub">DXコンサルティングサービス</span>
+        </div>
+        <span class="featured-arrow" aria-hidden="true">→</span>
+      </a>
 
-    <div class="sns-section">
-      <p class="sns-label">SNS</p>
-      <div class="sns-icons">
-        <!-- Instagram -->
-        <a href="https://www.instagram.com/mizuki_0829?igsh=NjFpNWgyZnliNHJl&utm_source=qr" class="sns-icon" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
-        </a>
-        <!-- X (Twitter) -->
-        <a href="https://x.com/mzk_notion02?s=21" class="sns-icon" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)">
-          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-        </a>
-        <!-- LINE -->
-        <a href="https://lin.ee/UAR3x3ZK" class="sns-icon" target="_blank" rel="noopener noreferrer" aria-label="LINE公式">
-          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M24 10.304c0-5.369-5.383-9.738-12-9.738S0 4.935 0 10.304c0 4.814 4.27 8.846 10.035 9.608.391.084.923.258 1.058.593.121.303.079.778.039 1.085l-.171 1.027c-.052.313-.242 1.224 1.073.667 1.314-.557 7.088-4.174 9.674-7.144C23.395 14.342 24 12.432 24 10.304z"/></svg>
-        </a>
-      </div>
-    </div>
+      <section class="chapter">
+        <header class="chapter-head">
+          <span class="chapter-num">01</span>
+          <h2 class="chapter-title"><span class="ja">発信</span></h2>
+          <span class="chapter-tag">SNS</span>
+        </header>
+        <ul class="link-list">
 
-    <div class="footer">&copy; 2026 Mizuki</div>
+          <li>
+            <a href="https://www.instagram.com/mizuki_0829?igsh=NjFpNWgyZnliNHJl&utm_source=qr" class="link-row" target="_blank" rel="noopener noreferrer">
+              <span class="link-num">01.01</span>
+              <span class="link-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+              </span>
+              <div class="link-meta">
+                <span class="link-title"><span class="en">Instagram</span></span>
+                <span class="link-sub">@mizuki_0829</span>
+              </div>
+              <span class="link-divider" aria-hidden="true"></span>
+              <span class="link-arrow" aria-hidden="true">→</span>
+            </a>
+          </li>
+
+          <li>
+            <a href="https://x.com/mzk_notion02?s=21" class="link-row" target="_blank" rel="noopener noreferrer">
+              <span class="link-num">01.02</span>
+              <span class="link-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+              </span>
+              <div class="link-meta">
+                <span class="link-title"><span class="en">X</span> <span style="color:var(--cream-mute);font-size:11px;">(旧Twitter)</span></span>
+                <span class="link-sub">@mzk_notion02</span>
+              </div>
+              <span class="link-divider" aria-hidden="true"></span>
+              <span class="link-arrow" aria-hidden="true">→</span>
+            </a>
+          </li>
+
+        </ul>
+      </section>
+
+      <section class="chapter">
+        <header class="chapter-head">
+          <span class="chapter-num">02</span>
+          <h2 class="chapter-title"><span class="ja">連絡先</span></h2>
+          <span class="chapter-tag">CONTACT</span>
+        </header>
+        <ul class="link-list">
+
+          <li>
+            <a href="https://lin.ee/UAR3x3ZK" class="link-row" target="_blank" rel="noopener noreferrer">
+              <span class="link-num">02.01</span>
+              <span class="link-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M24 10.304c0-5.369-5.383-9.738-12-9.738S0 4.935 0 10.304c0 4.814 4.27 8.846 10.035 9.608.391.084.923.258 1.058.593.121.303.079.778.039 1.085l-.171 1.027c-.052.313-.242 1.224 1.073.667 1.314-.557 7.088-4.174 9.674-7.144C23.395 14.342 24 12.432 24 10.304z"/></svg>
+              </span>
+              <div class="link-meta">
+                <span class="link-title"><span class="en">LINE</span> 公式アカウント</span>
+                <span class="link-sub">お仕事のご相談はこちら</span>
+              </div>
+              <span class="link-divider" aria-hidden="true"></span>
+              <span class="link-arrow" aria-hidden="true">→</span>
+            </a>
+          </li>
+
+        </ul>
+      </section>
+
+      <footer class="colophon">
+        <span>Colophon</span>
+        <span>Aichi, Japan</span>
+        <span>© 2026</span>
+      </footer>
+
+    </main>
   </div>
 </body>
 </html>
